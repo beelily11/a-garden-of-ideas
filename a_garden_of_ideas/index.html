@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Una carpeta digital de procesos, ideas y trabajos de arte.">
+  <title>A Garden of Ideas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="#home">A Garden <span>of Ideas</span></a>
+    <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    <nav class="main-nav" aria-label="Navegación principal">
+      <a href="#about">About</a>
+      <a href="#garden">The garden</a>
+      <a href="#reflection">Reflection</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-flower flower-one" aria-hidden="true">✿</div>
+      <div class="hero-flower flower-two" aria-hidden="true">❀</div>
+      <div class="hero-inner reveal">
+        <p class="eyebrow">A year of learning, creating & growing</p>
+        <h1>A Garden<br><em>of Ideas</em></h1>
+        <p class="hero-copy">Every idea begins somewhere. This is a little collection of everything that bloomed along the way.</p>
+        <a class="enter-link" href="#about">Enter the garden <span>↓</span></a>
+      </div>
+      <div class="hero-bottom-note">PORTFOLIO · 2026</div>
+    </section>
+
+    <section class="intro section-wrap" id="about">
+      <div class="section-kicker reveal">01 / A little introduction</div>
+      <div class="intro-grid">
+        <div class="intro-art reveal" aria-hidden="true">
+          <div class="oval-frame"><span>✿</span><small>growing through<br>creativity</small></div>
+          <span class="side-sprig">❧</span>
+        </div>
+        <div class="intro-text reveal">
+          <p class="eyebrow">A note from the artist</p>
+          <h2>Every garden<br>has a <em>beginning.</em></h2>
+          <p>Welcome to my creative garden. Here I gathered the ideas, experiments, discoveries and projects that shaped my year.</p>
+          <p class="placeholder-note">This introduction will become your personal presentation. We’ll write it together later.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="garden-section" id="garden">
+      <div class="section-wrap">
+        <div class="section-kicker reveal">02 / The collection</div>
+        <div class="section-heading reveal">
+          <p class="eyebrow">Little seeds, growing ideas</p>
+          <h2>The garden <em>of projects</em></h2>
+          <p>Explore the different stages of my creative journey.</p>
+        </div>
+        <div class="project-grid">
+          <article class="project-card reveal">
+            <div class="project-number">01</div>
+            <div class="project-placeholder"><span>✿</span><small>Artwork coming soon</small></div>
+            <h3>First bloom</h3>
+            <p>A place for the first project and its creative process.</p>
+            <span class="card-foot">PROCESS · ARTWORK · REFLECTION</span>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-number">02</div>
+            <div class="project-placeholder"><span>❀</span><small>Artwork coming soon</small></div>
+            <h3>New branches</h3>
+            <p>A place for another project, experiments and discoveries.</p>
+            <span class="card-foot">PROCESS · ARTWORK · REFLECTION</span>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-number">03</div>
+            <div class="project-placeholder"><span>❁</span><small>Artwork coming soon</small></div>
+            <h3>In full bloom</h3>
+            <p>A place for a project that shows how your ideas developed.</p>
+            <span class="card-foot">PROCESS · ARTWORK · REFLECTION</span>
+          </article>
+        </div>
+        <p class="section-note reveal">These are temporary cards. We’ll replace them with your real assignments and add as many as you need.</p>
+      </div>
+    </section>
+
+    <section class="reflection section-wrap" id="reflection">
+      <div class="section-kicker reveal">03 / Looking back</div>
+      <div class="reflection-panel reveal">
+        <span class="reflection-ornament">❧</span>
+        <p class="eyebrow">The things that stayed with me</p>
+        <h2>What <em>blooms</em><br>within us?</h2>
+        <p>This space will hold your final reflection: what changed, what you learned and what you want to keep growing.</p>
+        <span class="reflection-ornament bottom">❧</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>A GARDEN OF IDEAS</span>
+    <span>Made with curiosity & care · 2026</span>
+  </footer>
+</body>
+</html>
