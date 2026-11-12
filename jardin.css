@@ -1,0 +1,117 @@
+/* =====================================================================
+   JARDIN.CSS · Scrollytelling, profundidad, enredaderas, pétalos, introducciones
+   Se carga después de styles.css. Usa las mismas variables de color.
+   ===================================================================== */
+html { scroll-behavior: smooth; }
+
+/* ---------- A. Crecimiento de la flor (sección #jardin) ---------- */
+.jardin { position: relative; height: 420vh; background: var(--beige); }
+.jardin-escena { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden;
+  background: linear-gradient(180deg, var(--beige) 0%, #e9e0bd 22%, #cdd6b4 55%, #9fae92 100%); }
+.jardin-escena::before { content: ""; position: absolute; inset: 0; z-index: 6; pointer-events: none; mix-blend-mode: multiply; opacity: .35;
+  background: radial-gradient(ellipse at 50% 30%, rgba(255,244,214,.55), transparent 60%), radial-gradient(ellipse at 50% 120%, rgba(60,50,25,.35), transparent 55%); }
+.jardin-escena::after { content: ""; position: absolute; inset: 0; z-index: 7; pointer-events: none; opacity: .22; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .32 0 0 0 0 .2 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.jardin::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 55vh; z-index: 8; pointer-events: none;
+  background: linear-gradient(180deg, transparent, var(--crema)); }
+.capa { position: absolute; inset: -6% 0; will-change: transform; pointer-events: none; }
+.capa svg, .capa .veg { position: absolute; }
+.capa.fondo { z-index: 1; filter: blur(1.5px); }
+.capa.fondo svg { width: 100%; height: 100%; }
+.capa.media { z-index: 2; }
+.capa.frente { z-index: 5; filter: blur(2.5px); }
+.veg { transform-origin: 50% 100%; animation: mecer var(--dur, 7s) ease-in-out infinite alternate; animation-delay: var(--del, 0s); }
+@keyframes mecer { from { transform: rotate(calc(var(--ang, 2deg) * -1)); } to { transform: rotate(var(--ang, 2deg)); } }
+.flor-crece { z-index: 4; position: absolute; left: 50%; bottom: 0; height: 100%; width: auto; max-width: 100vw; transform: translateX(-50%); overflow: visible; }
+.planta { transform-box: fill-box; transform-origin: 50% 100%; animation: mecer 8s ease-in-out infinite alternate; --ang: 1.1deg; }
+.jardin-texto { position: absolute; z-index: 9; left: 0; right: 0; top: 9%; text-align: center; padding: 0 1.5rem; font-family: var(--titulos); font-style: italic;
+  font-size: clamp(1.5rem, 4.2vw, 2.7rem); color: var(--marron); text-shadow: 0 1px 12px rgba(251,245,230,.9); transition: opacity .5s, transform .5s; }
+.jardin-texto.cambia { opacity: 0; transform: translateY(8px); }
+.sigue { position: absolute; z-index: 9; bottom: 2.2rem; left: 50%; translate: -50% 0; font: .8rem var(--cuerpo); letter-spacing: .25em; text-transform: uppercase; color: var(--marron); opacity: .8; animation: sigue 2.4s ease-in-out infinite; }
+@keyframes sigue { 50% { translate: -50% 8px; } }
+.mariposa-vuela { position: absolute; z-index: 5; width: 54px; left: -8%; top: 55%; animation: vuela 26s linear infinite; }
+.mariposa-vuela svg { width: 100%; animation: aleteo .35s ease-in-out infinite alternate; }
+@keyframes vuela { 0% { transform: translate(0, 0); } 25% { transform: translate(30vw, -22vh); } 50% { transform: translate(62vw, 6vh); } 75% { transform: translate(92vw, -26vh); } 100% { transform: translate(120vw, -4vh); } }
+@keyframes aleteo { to { transform: scaleX(.45); } }
+
+/* ---------- Enredaderas laterales y pétalos (continúan en toda la página) ---------- */
+#enredaderas { position: fixed; inset: 0; z-index: 19; pointer-events: none; }
+#enredaderas svg { position: absolute; top: 0; height: 100%; width: 64px; overflow: visible; }
+#enredaderas .izq { left: 0; } #enredaderas .der { right: 0; transform: scaleX(-1); }
+#petalos { position: fixed; inset: 0; z-index: 21; pointer-events: none; overflow: hidden; }
+.petalo-vuela { position: absolute; top: -40px; width: var(--s, 16px); opacity: .8; animation: cae var(--d, 20s) linear infinite; animation-delay: var(--w, 0s); }
+.petalo-vuela svg { width: 100%; fill: var(--rosa-claro); stroke: var(--rosa); stroke-width: 1; animation: gira var(--g, 5s) ease-in-out infinite alternate; }
+@keyframes cae { to { transform: translate3d(var(--dx, 80px), 112vh, 0); } }
+@keyframes gira { from { transform: rotate(-40deg) scaleX(1); } to { transform: rotate(50deg) scaleX(.55); } }
+
+@keyframes flota { 50% { translate: 0 -9px; rotate: 1.2deg; } }
+
+/* ---------- 3. Láminas: el marco se adapta a la imagen ---------- */
+.marco { max-width: calc(86vh * var(--r, 1.5)); margin-inline: auto; }
+.proyecto.vertical .proyecto-cuerpo { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
+.proyecto.vertical.invertido .proyecto-cuerpo { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); }
+.proyecto.vertical .col-foto { padding: 0 6%; }
+
+/* ---------- 4. Trabajos en proceso ---------- */
+.etiqueta-proceso { display: block; width: max-content; margin: 22px auto 0; padding: 4px 16px; font: italic 1rem var(--titulos); letter-spacing: .08em; color: var(--rosa-oscuro);
+  border: 1px solid var(--oro); border-radius: 20px; background: var(--papel); }
+.proyecto.en-proceso .marco .contenedor-img { background: repeating-linear-gradient(135deg, var(--papel) 0 14px, #f3e6cc 14px 15px); }
+.proyecto.en-proceso .vacio { border: 1px dashed var(--oro); inset: 10px; background: transparent; font-style: italic; }
+
+@media (max-width: 800px) {
+  .proyecto.vertical .proyecto-cuerpo, .proyecto.vertical.invertido .proyecto-cuerpo { grid-template-columns: 1fr; }
+  #enredaderas svg { width: 40px; } .jardin { height: 360vh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; } .veg, .planta, .mariposa-vuela, .mariposa-vuela svg, .sigue { animation: none; }
+  #petalos { display: none; } .jardin { height: auto; } .jardin-escena { position: relative; }
+}
+
+/* =====================================================================
+   VERSIÓN 3 · Recursos fotográficos (assets/jardin/)
+   ===================================================================== */
+.jardin-escena { background: var(--beige); }
+.jardin-escena::before { z-index: 6; mix-blend-mode: normal; opacity: 1;
+  background: linear-gradient(180deg, var(--beige) 0%, rgba(228,211,173,.55) 14%, transparent 38%), radial-gradient(ellipse at 50% 45%, transparent 45%, rgba(74,54,41,.38) 100%); }
+.capa.fondo { filter: none; inset: 0; } .capa.fondo img { width: 100%; height: 100%; object-fit: cover; filter: sepia(.28) saturate(.9) brightness(.95); transform-origin: 50% 40%; }
+.capa .veg, .capa img { position: absolute; max-width: none; height: auto; }
+.capa.frente { filter: none; } .capa.frente .veg { filter: blur(2px) saturate(1.05); }
+.capa.frente .colgante { filter: none; }
+.suelo { position: absolute; left: 0; right: 0; bottom: 0; height: 30.5%; z-index: 3;
+  background: linear-gradient(180deg, #8a6a4a 0%, #5d4331 40%, #3a2a20 100%); box-shadow: 0 -10px 24px rgba(40,28,18,.45); }
+.flor-crece { position: absolute; z-index: 4; left: 50%; bottom: 0; height: 100%; aspect-ratio: 1 / 2; width: auto; transform: translateX(-50%); }
+.flor-crece > svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.planta-fotos { position: absolute; inset: 0; transform-origin: 50% 100%; animation: mecer 8s ease-in-out infinite alternate; --ang: 1deg; }
+.planta-fotos img { position: absolute; height: auto; max-width: none; transform-origin: 50% 100%; filter: drop-shadow(0 6px 8px rgba(40,28,18,.3)); }
+.planta-fotos #tallo { height: 40.5%; }
+/* Enredaderas laterales (crecen hacia abajo con el scroll de toda la página) */
+#enredaderas { overflow: hidden; }
+#enredaderas .lateral { position: absolute; top: -2%; width: min(22vw, 230px); height: auto; opacity: .92; transform-origin: 50% 0; animation: mecer 9s ease-in-out infinite alternate; --ang: 1deg; }
+#enredaderas .izq { left: -4vw; } #enredaderas .der { right: -4vw; scale: -1 1; animation-delay: -4s; }
+@media (max-width: 800px) { #enredaderas .lateral { width: 30vw; opacity: .8; } #enredaderas .der { display: none; } }
+/* Decoraciones al inicio de cada sección */
+.seccion { position: relative; }
+.deco { position: absolute; top: -40px; z-index: 1; pointer-events: none; height: auto; transform-origin: 50% 0; animation: mecer 10s ease-in-out infinite alternate; --ang: 1.2deg; }
+.deco.pergola { width: min(34vw, 420px); } .deco.izq { left: 0; } .deco.der { right: 0; scale: -1 1; }
+.deco.columna-deco { width: min(16vw, 170px); right: 3%; top: auto; bottom: 4%; animation: none; }
+@media (max-width: 800px) { .deco.pergola { width: 46vw; } .deco.columna-deco { display: none; } }
+.petalo-vuela img { width: 100%; display: block; animation: gira var(--g, 5s) ease-in-out infinite alternate; filter: drop-shadow(0 2px 3px rgba(60,40,20,.25)); }
+@media (prefers-reduced-motion: reduce) { .planta-fotos, .lateral, .deco { animation: none; } }
+
+/* =====================================================================
+   VERSIÓN 4 · Autorretrato, introducciones y láminas con fotos extra
+   ===================================================================== */
+.retrato { max-width: min(760px, 92vw); margin: 2.4rem auto 0; }
+.intro-bloque { max-width: 1100px; margin: 4.5rem auto; padding: 2.2rem clamp(1rem, 4vw, 2.6rem); background: var(--papel); border: 1px solid var(--oro);
+  box-shadow: 0 0 0 6px var(--papel), 0 0 0 7px var(--oro), 0 18px 38px rgba(107, 74, 53, .22); position: relative; z-index: 2; }
+.etiqueta-intro { display: inline-block; font: italic .95rem var(--titulos); letter-spacing: .16em; text-transform: uppercase; color: var(--rosa-oscuro); }
+.intro-bloque .titulo-lamina { margin: .2rem 0 1.4rem; text-align: left; }
+.intro-cuerpo { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(1rem, 3vw, 2.4rem); align-items: start; }
+.intro-texto p { margin: 0 0 .9rem; line-height: 1.65; }
+.intro-texto h4 { font: italic 1.25rem var(--titulos); color: var(--rosa-oscuro); margin: 1.1rem 0 .4rem; }
+.intro-texto ul { margin: 0; padding-left: 1.1rem; line-height: 1.55; } .intro-texto li { margin-bottom: .3rem; } .intro-texto li::marker { color: var(--oro); }
+.intro-texto blockquote { margin: 1.2rem 0 0; padding: .4rem 0 .4rem 1rem; border-left: 3px solid var(--oro); font: italic 1.1rem var(--titulos); }
+.intro-galeria { display: grid; gap: 1.3rem; } .intro-figura { margin: 0; } .intro-figura .marco { max-width: 100%; }
+.intro-figura figcaption { font: italic .95rem var(--titulos); text-align: center; margin-top: .45rem; }
+.extras { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 16px; } .extras .marco { margin: 0; max-width: 100%; }
+@media (max-width: 800px) { .intro-cuerpo { grid-template-columns: 1fr; } }

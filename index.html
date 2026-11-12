@@ -1,102 +1,127 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Una carpeta digital de procesos, ideas y trabajos de arte.">
-  <title>A Garden of Ideas</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carpeta de proceso · Comunicación visual y diseño</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="jardin.css">
 </head>
 <body>
-  <header class="site-header">
-    <a class="wordmark" href="#home">A Garden <span>of Ideas</span></a>
-    <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
-    <nav class="main-nav" aria-label="Navegación principal">
-      <a href="#about">About</a>
-      <a href="#garden">The garden</a>
-      <a href="#reflection">Reflection</a>
-    </nav>
-  </header>
 
-  <main>
-    <section class="hero" id="home">
-  <img
-    class="cover-image"
-    src="./assets/portada.png"
-    alt="Portada de mi carpeta de procesos"
-  >
+<!-- ================= FLORES Y ORNAMENTOS (SVG reutilizables) =================
+     Se usan con: <svg class="flor"><use href="#lirio"/></svg>
+     Para cambiar sus colores editá las variables --rosa, --rosa-claro, --oro en styles.css -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <path id="petalo" d="M60 62C46 42 48 16 60 3C72 16 74 42 60 62Z"/>
+    <symbol id="lirio" viewBox="0 0 120 120">
+      <g style="fill:var(--rosa-claro);stroke:var(--rosa);stroke-width:1.2">
+        <use href="#petalo" transform="rotate(60 60 60)"/><use href="#petalo" transform="rotate(180 60 60)"/><use href="#petalo" transform="rotate(300 60 60)"/>
+        <use href="#petalo"/><use href="#petalo" transform="rotate(120 60 60)"/><use href="#petalo" transform="rotate(240 60 60)"/>
+      </g>
+      <g style="stroke:var(--rosa);stroke-width:1;fill:none"><path d="M60 58V14M60 58L24 32M60 58L96 32M60 58L24 88M60 58L96 88M60 58V104"/></g>
+      <g style="stroke:var(--oro);stroke-width:1.4"><path d="M60 60L48 38M60 60L72 38M60 60L60 34"/></g>
+      <g style="fill:var(--oro)"><circle cx="48" cy="37" r="3"/><circle cx="72" cy="37" r="3"/><circle cx="60" cy="33" r="3"/></g>
+    </symbol>
+    <symbol id="tulipan" viewBox="0 0 80 170">
+      <path d="M40 80V168" style="stroke:var(--oliva);stroke-width:4;fill:none"/>
+      <path d="M40 168C10 140 14 100 22 92C30 118 38 140 40 168ZM40 168C70 142 66 104 58 96C50 120 42 142 40 168Z" style="fill:var(--salvia)"/>
+      <path d="M14 30C8 70 26 92 40 92C54 92 72 70 66 30C56 44 48 38 40 14C32 38 24 44 14 30Z" style="fill:var(--rosa);stroke:var(--rosa-oscuro);stroke-width:1"/>
+      <path d="M40 14C30 40 32 70 40 92C48 70 50 40 40 14Z" style="fill:var(--rosa-claro);opacity:.85"/>
+    </symbol>
+    <symbol id="hoja" viewBox="0 0 60 100">
+      <path d="M30 98C2 70 6 28 30 2C54 28 58 70 30 98Z" style="fill:var(--salvia);stroke:var(--oliva);stroke-width:1"/><path d="M30 96V10" style="stroke:var(--oliva);fill:none"/>
+    </symbol>
+    <symbol id="mariposa" viewBox="0 0 100 80">
+      <g style="fill:var(--rosa-claro);stroke:var(--oro);stroke-width:1.5"><path d="M50 40C30 0 2 6 8 34C12 52 38 52 50 40ZM50 40C70 0 98 6 92 34C88 52 62 52 50 40ZM50 42C34 50 22 72 38 72C46 72 50 56 50 42ZM50 42C66 50 78 72 62 72C54 72 50 56 50 42Z"/></g>
+      <path d="M50 28V58" style="stroke:var(--marron);stroke-width:3"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- Capa fija de flores que se mecen durante todo el recorrido (se genera desde script.js) -->
+<div class="capa-flotante" id="capaFlotante" aria-hidden="true"></div>
+
+<div id="enredaderas" aria-hidden="true"><img class="lateral izq" src="assets/jardin/enredadera.webp" alt="" style="" data-lat="1" loading="lazy" decoding="async"><img class="lateral der" src="assets/jardin/enredadera.webp" alt="" style="" data-lat="1" loading="lazy" decoding="async"></div>
+<div id="petalos" aria-hidden="true"></div>
+
+<nav class="menu" id="menu" aria-label="Navegación">
+  <a href="#portada">Portada</a><a href="#jardin">Jardín</a><a href="#autorretrato">Autorretrato</a><a href="#proyectos">Láminas</a><a href="#reflexion">Reflexión</a>
+</nav>
+
+<!-- ================= 1. PORTADA =================
+     Para cambiar la portada: reemplazá assets/portada.png (mismo nombre) o cambiá el src. -->
+<header id="portada" class="portada">
+  <img src="assets/portada.png" alt="Portada: Evaluación final del curso, Carpeta de proceso. Comunicación visual y diseño. Belén Muela, 6to Ingeniería">
+  <div class="portada-barra"><a class="boton" href="#jardin" id="btnComenzar">Comenzar el recorrido</a></div>
+</header>
+
+
+<!-- ================= 1b. JARDÍN: la flor crece mientras bajás (jardin.js) =================
+     Capas con parallax (data-vel = velocidad). Imágenes en assets/jardin/. -->
+<section id="jardin" class="jardin" aria-label="Recorrido por el jardín: crece un tulipán">
+  <div class="jardin-escena">
+    <div class="capa fondo" data-vel="0.05"><img id="fondoJardin" src="assets/jardin/arco.jpg" alt=""></div>
+    <div class="capa media" data-vel="0.18"><img class="veg" src="assets/jardin/lirio.webp" alt="" style="left:1%;bottom:22%;width:min(24vw,300px);--ang:3deg;--dur:8s"  loading="lazy" decoding="async"><img class="veg" src="assets/jardin/tulipan-oscuro.webp" alt="" style="right:3%;bottom:15%;width:min(17vw,210px);--ang:2deg;--dur:9s;--del:-3s;scale:-1 1"  loading="lazy" decoding="async"><img class="veg" src="assets/jardin/tulipan-rosa.webp" alt="" style="left:19%;bottom:3%;width:min(10vw,120px);--ang:3deg;--dur:7s;--del:-1s"  loading="lazy" decoding="async"><img class="veg" src="assets/jardin/lirio.webp" alt="" style="right:21%;bottom:25%;width:min(11vw,140px);--ang:4deg;--dur:10s;--del:-5s;scale:-1 1;rotate:-10deg"  loading="lazy" decoding="async"><img class="veg" data-lento="1" src="assets/jardin/columna.webp" alt="" style="right:-2%;bottom:7%;width:min(15vw,190px);opacity:.9;filter:blur(1px)"  loading="lazy" decoding="async"><img class="veg" src="assets/jardin/tulipan-oscuro.webp" alt="" style="left:7%;bottom:2%;width:min(9vw,110px);--ang:2.5deg;--dur:11s;--del:-6s;rotate:-6deg"  loading="lazy" decoding="async"></div>
+    <div class="suelo"></div>
+    <div class="flor-crece" role="img" aria-label="Una semilla germina y se convierte en un tulipán">
+      <svg viewBox="0 0 400 800" aria-hidden="true">
+        <defs>
+        <linearGradient id="gRaiz" x1="0" x2="1"><stop offset="0" stop-color="#f1e7cf"/><stop offset=".5" stop-color="#d8c39a"/><stop offset="1" stop-color="#b09468"/></linearGradient>
+        <radialGradient id="gSemilla" cx=".35" cy=".3"><stop offset="0" stop-color="#b88f5e"/><stop offset="1" stop-color="#4b3020"/></radialGradient>
+        <filter id="fRaiz" x="-15%" y="-10%" width="130%" height="125%"><feTurbulence type="fractalNoise" baseFrequency=".06" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" result="d"/><feDropShadow in="d" dx="0" dy="1.2" stdDeviation="1.1" flood-color="#241810" flood-opacity=".55"/></filter>
+      </defs>
+      <g id="raices" filter="url(#fRaiz)"></g>
+        <ellipse id="semilla" transform="translate(200 604)" rx="13" ry="9" fill="url(#gSemilla)" stroke="#3f2b1f" stroke-width="1.5"/>
+      </svg>
+      <div class="planta-fotos">
+        <img id="tallo" src="assets/jardin/tulipan-tallo.webp" alt="" style="left:50%;bottom:25.25%;width:4.2%;height:40.5%;translate:-50% 0">
+        <img id="hojaI" src="assets/jardin/hoja-lirio.webp" alt="" style="left:50%;bottom:41%;width:17%">
+        <img id="hojaD" src="assets/jardin/hoja-lirio.webp" alt="" style="left:50%;bottom:50%;width:19%">
+        <img id="brote" src="assets/jardin/tulipan-cabeza.webp" alt="" style="left:31%;bottom:65%;width:38%">
+      </div>
+    </div>
+    <div class="capa frente" data-vel="0.34"><img class="veg colgante" src="assets/jardin/enredadera.webp" alt="" style="left:-4%;top:-8%;width:min(36vw,440px);transform-origin:50% 0;--ang:1.2deg;--dur:9s" data-grow="1" loading="lazy" decoding="async"><img class="veg colgante" src="assets/jardin/enredadera.webp" alt="" style="right:-5%;top:-10%;width:min(26vw,320px);scale:-1 1;--ang:1.6deg;--dur:7s;--del:-3s" data-grow="1" loading="lazy" decoding="async"><img class="veg" src="assets/jardin/lirio.webp" alt="" style="left:-7%;bottom:-12%;width:min(34vw,420px);--ang:2deg;--dur:12s"  loading="lazy" decoding="async"><img class="veg" src="assets/jardin/tulipan-oscuro.webp" alt="" style="right:-3%;bottom:-9%;width:min(24vw,300px);--ang:1.6deg;--dur:13s;--del:-4s;rotate:8deg"  loading="lazy" decoding="async"></div>
+  </div>
 </section>
 
-    <section class="intro section-wrap" id="about">
-      <div class="section-kicker reveal">01 / A little introduction</div>
-      <div class="intro-grid">
-        <div class="intro-art reveal" aria-hidden="true">
-          <div class="oval-frame"><span>✿</span><small>growing through<br>creativity</small></div>
-          <span class="side-sprig">❧</span>
-        </div>
-        <div class="intro-text reveal">
-          <p class="eyebrow">A note from the artist</p>
-          <h2>Every garden<br>has a <em>beginning.</em></h2>
-          <p>Welcome to my creative garden. Here I gathered the ideas, experiments, discoveries and projects that shaped my year.</p>
-          <p class="placeholder-note">This introduction will become your personal presentation. We’ll write it together later.</p>
-        </div>
-      </div>
-    </section>
+<!-- ================= 2. AUTORRETRATO VISUAL (tu foto: assets/rostro.jpg) ================= -->
+<section id="autorretrato" class="seccion">
+  <img class="ramas" src="assets/ramas.jpg" alt="" data-parallax="0.05">
+    <img class="deco pergola izq" src="assets/jardin/enredadera.webp" alt="" style="" data-crece="1" loading="lazy" decoding="async">
+  <h2 class="reveal" id="tituloAutorretrato">Autorretrato visual</h2>
+  <figure class="retrato reveal">
+    <div class="marco rectangular" style="--r:1.430">
+      <div class="contenedor-img" style="aspect-ratio:1600 / 1119"><img src="assets/rostro.jpg" alt="Autorretrato visual" style="object-fit:contain"></div>
+      <svg class="flor adorno a1" aria-hidden="true"><use href="#lirio"/></svg><svg class="flor adorno a2" aria-hidden="true"><use href="#tulipan"/></svg>
+      <svg class="flor adorno a3" aria-hidden="true"><use href="#tulipan"/></svg><svg class="flor adorno a4" aria-hidden="true"><use href="#lirio"/></svg>
+    </div>
+    <figcaption id="pieAutorretrato" class="pie-retrato"></figcaption>
+  </figure>
+</section>
 
-    <section class="garden-section" id="garden">
-      <div class="section-wrap">
-        <div class="section-kicker reveal">02 / The collection</div>
-        <div class="section-heading reveal">
-          <p class="eyebrow">Little seeds, growing ideas</p>
-          <h2>The garden <em>of projects</em></h2>
-          <p>Explore the different stages of my creative journey.</p>
-        </div>
-        <div class="project-grid">
-          <article class="project-card reveal">
-            <div class="project-number">01</div>
-            <div class="project-placeholder"><span>✿</span><small>Artwork coming soon</small></div>
-            <h3>First bloom</h3>
-            <p>A place for the first project and its creative process.</p>
-            <span class="card-foot">PROCESS · ARTWORK · REFLECTION</span>
-          </article>
-          <article class="project-card reveal">
-            <div class="project-number">02</div>
-            <div class="project-placeholder"><span>❀</span><small>Artwork coming soon</small></div>
-            <h3>New branches</h3>
-            <p>A place for another project, experiments and discoveries.</p>
-            <span class="card-foot">PROCESS · ARTWORK · REFLECTION</span>
-          </article>
-          <article class="project-card reveal">
-            <div class="project-number">03</div>
-            <div class="project-placeholder"><span>❁</span><small>Artwork coming soon</small></div>
-            <h3>In full bloom</h3>
-            <p>A place for a project that shows how your ideas developed.</p>
-            <span class="card-foot">PROCESS · ARTWORK · REFLECTION</span>
-          </article>
-        </div>
-        <p class="section-note reveal">These are temporary cards. We’ll replace them with your real assignments and add as many as you need.</p>
-      </div>
-    </section>
+<!-- ================= 3. LÁMINAS (se generan desde datos.js) ================= -->
+<section id="proyectos" class="seccion">
+  <img class="ramas inv" src="assets/ramas.jpg" alt="" data-parallax="0.05">
+    <img class="deco pergola der" src="assets/jardin/enredadera.webp" alt="" style="" data-crece="1" loading="lazy" decoding="async">
+  <h2 class="reveal" id="tituloProyectos">Proyectos y láminas</h2>
+  <div class="divisor reveal"><svg><use href="#lirio"/></svg><svg><use href="#tulipan"/></svg><svg><use href="#lirio"/></svg></div>
+  <div id="listaProyectos"></div>
+</section>
 
-    <section class="reflection section-wrap" id="reflection">
-      <div class="section-kicker reveal">03 / Looking back</div>
-      <div class="reflection-panel reveal">
-        <span class="reflection-ornament">❧</span>
-        <p class="eyebrow">The things that stayed with me</p>
-        <h2>What <em>blooms</em><br>within us?</h2>
-        <p>This space will hold your final reflection: what changed, what you learned and what you want to keep growing.</p>
-        <span class="reflection-ornament bottom">❧</span>
-      </div>
-    </section>
-  </main>
+<!-- ================= 4. REFLEXIÓN FINAL (se genera desde datos.js) ================= -->
+<section id="reflexion" class="seccion cierre">
+    <img class="deco pergola izq" src="assets/jardin/enredadera.webp" alt="" style="" data-crece="1" loading="lazy" decoding="async">
+  <img class="deco columna-deco" src="assets/jardin/columna.webp" alt="" style="" data-crece="1" loading="lazy" decoding="async">
+  <h2 class="reveal" id="tituloReflexion">Reflexión final</h2>
+  <div class="divisor reveal"><svg><use href="#tulipan"/></svg><svg><use href="#lirio"/></svg><svg><use href="#tulipan"/></svg></div>
+  <div id="listaReflexion" class="reflexion"></div>
+  <div class="firma reveal" id="firma"></div>
+</section>
 
-  <footer class="site-footer">
-    <span>A GARDEN OF IDEAS</span>
-    <span>Made with curiosity & care · 2026</span>
-  </footer>
+<script src="datos.js"></script>
+<script src="script.js"></script>
+<script src="jardin.js"></script>
 </body>
 </html>
